@@ -1,0 +1,37 @@
+body{
+    text-align: center;
+}
+h1{
+    margin-top: 25px;
+}
+textarea{
+    resize: none;
+    width: 500px;
+    height: 200px;
+    margin-top: 50px;
+    color: black;
+}
+textarea:focus{
+    outline: none;
+}
+input{
+    margin-top: 25px;
+    width: 200px;
+    height: 35px;
+    color: white;
+    background-color: black;
+    font-weight: 900;
+}
+.github-link a{
+    position: absolute;
+    bottom: 25px;
+    text-decoration: none;
+    right: 45%;
+    left: 46%;
+}
+a:visited{
+    color: black;
+}
+a:active{
+    color: black;
+}
