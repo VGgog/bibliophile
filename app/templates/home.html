@@ -8,16 +8,12 @@
     <h1>bibliophile</h1>
     <body>
         <div class="content">
-            <form action="/test", method="POST">
-            <p class="text_area_field"><textarea id="text-fragment" rows="10", cols="10", placeholder="Введите фразу и bibliophile найдёт отрывок из литературных произведений."></textarea></p>
+            <p class="text_area_field"><textarea id="text-phrase" rows="10", cols="10", placeholder="Введите фразу и bibliophile найдёт отрывок из литературных произведений."></textarea></p>
             <p><input id="submit", type="button", name="button_field", value="Отрывок"></p>
-            </form>
         </div>
-        {% if message %}
-        <div class="fragment-text">
-            <p>{{ message }}</p>
+        <div class="fragment-text" id="fragment-div">
+            <p id="fragment-text"></p>
         </div>
-        {% endif %}
         <div class="github-link">
             <a href="https://github.com/VGgog/bibliophile">Исходный код</a>
         </div>
