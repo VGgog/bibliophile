@@ -10,3 +10,7 @@ def add_url(db: Session, url_data: schema.URLModel):
     db.commit()
     db.refresh(data)
     return data
+
+
+def check_url_in_db(db: Session, url):
+    return db.query(models.Urls).filter(models.Urls.url == url).first()
