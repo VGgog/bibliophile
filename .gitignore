@@ -1,4 +1,6 @@
 /venv 
 plan.txt
 /.idea
+__pycache__
 /app/__pycache__
+/app/admin/__pycache__
