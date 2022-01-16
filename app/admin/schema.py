@@ -1,8 +1,8 @@
 from pydantic import BaseModel
 
 
-class URLModel(BaseModel):
-    """Model request on add book-url"""
+class Book(BaseModel):
+    """Model validate admin-request on add book in db"""
     token: str
     url: str
     author: str
@@ -11,4 +11,3 @@ class URLModel(BaseModel):
 
     class Config:
         orm_mode = True
-
