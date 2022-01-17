@@ -6,13 +6,13 @@ from app import fragment
 
 
 @app.get("/", response_class=HTMLResponse)
-def home_page(request: Request):
+async def home_page(request: Request):
     """Return website home page."""
     return templates.TemplateResponse("home.html", {"request": request})
 
 
 @app.post("/")
-def returning_the_found_passage(phrase_obj: validation.PhraseJSON):
+async def returning_the_found_passage(phrase_obj: validation.PhraseJSON):
     """Function for getting a phrase and return the found passage."""
     phrase = phrase_obj.phrase
     fragment_text = fragment.return_fragment(phrase)

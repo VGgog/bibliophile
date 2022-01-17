@@ -22,7 +22,7 @@ def get_db():
 
 
 @app.post("/admin/add")
-def add_book_data_in_db(data: schema.Book, db: Session = Depends(get_db)):
+async def add_book_data_in_db(data: schema.Book, db: Session = Depends(get_db)):
     """Function add book data(text-url, author, book_title etc.) in db."""
     if not data.token == Config.admin_token:
         raise HTTPException(status_code=403, detail="You don't have rights")
