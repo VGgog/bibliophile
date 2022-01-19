@@ -20,6 +20,10 @@ def check_book_in_db(db: Session, book_title):
 
 
 def number_of_books(db: Session):
-    """return number of books in db"""
+    """Return number of books in db"""
     return db.query(models.Book).count()
+
+def return_book(db: Session, book_id):
+    """Return book obj from db"""
+    return db.query(models.Book).filter(models.Book.id == book_id).first()
 
