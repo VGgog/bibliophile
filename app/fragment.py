@@ -52,7 +52,7 @@ def search_fragment_in_text(phrase, text):
     return None
 
 
-async def return_result_of_searching(phrase, db):
+def return_result_of_searching(phrase, db):
     """Returns the result of searching for a fragment in the text"""
     book = get_book(db)
     url = get_book_url(book)
