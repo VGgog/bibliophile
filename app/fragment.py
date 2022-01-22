@@ -4,62 +4,71 @@ import random
 import requests
 from bs4 import BeautifulSoup
 
-from app.database import db_crud
+from app.database import db_crud, session
 
 
-def get_book(db):
-    """Get book object in db"""
-    book_id = random.randrange(1, db_crud.number_of_books(db)+1)
-    return db_crud.return_book(db=db, book_id=book_id)
+class GetFragment:
+
+    def __init__(self, phrase):
+
+        self.db = session()
+
+        self.phrase = phrase
+        self.book = self.get_book()
+        self.text_link = self.get_text_link()
+        self.text = self.get_text(self.get_html_text()) 
+        self.result = self.search_fragment_in_text()
+
+        self.author = self.book.author
+        self.book_title = self.book.book_title
+
+    def get_book(self):
+        """Get random book in db"""
+        self.book_id = random.randrange(1, db_crud.number_of_books(self.db)+1)
+        return db_crud.return_book(db=self.db, book_id=self.book_id)
    
-
-def get_book_url(book):
-    """Return book url"""    
-    if book.max_page != 1:
-        return book.url[:-11] + "/p." + str(random.randrange(1, book.max_page + 1)) + book.url[-11:]
-    else:
-        return book.url[:-11] + "/p.1" + book.url[-11:]
-
-
-def get_html_text(url):
-    """Makes request on book url, and return html_text"""
-    response = requests.get(url)
-    return response.text
-
-
-def get_text(html_text):
-    """Return text of the book"""
-    pars_obj = BeautifulSoup(html_text, 'lxml')
-    text = pars_obj.find('div', id='text')
-    return text.text
-
-
-def search_fragment_in_text(phrase, text):
-    """Search need phrase in text.
-    If fragment was found return fragment.
-    Else return None"""
-    result = re.search("\n.*"+phrase+".*\n", text)
-    if result:
-        fragment = result[0].strip()
-        # If fragment close ":"(in russian language most often it means that text ends with a direct speech),
-        # that take next paragraph
-        if fragment[-1] == ":":
-            new_fragment = re.search("\n.*"+phrase+".*\n.*\n", text)
-            return new_fragment[0].strip()
+    def get_text_link(self):
+        """
+        Return text_link.
+        exaple: book_url = https://ilibrary.ru/text/11/index.html
+        But text located at the link https://ilibrary.ru/text/11/p.{number of page}/index.html. 
+        Due to this function converts book_url to the text_link when text located.
+        Number of page = random number before max_page 
+        book.url[:-11] = https://ilibrary.ru/text/11
+        book.url[-11:] = /index.html
+        """    
+        if self.book.max_page != 1:
+            return self.book.url[:-11] + "/p." + str(random.randrange(1, self.book.max_page + 1)) + self.book.url[-11:]
         else:
-            return fragment
+            return self.book.url[:-11] + "/p.1" + self.book.url[-11:]
 
-    return None
+    def get_html_text(self):
+        """Makes request on text_link, and return html_text"""
+        self.response = requests.get(self.text_link)
+        return self.response.text
 
+    def get_text(self, html_text):
+        """Return text of the book"""
+        self.pars_obj = BeautifulSoup(html_text, 'lxml')
+        self.text = self.pars_obj.find('div', id='text')
+        return self.text.text
 
-def return_result_of_searching(phrase, db):
-    """Returns the result of searching for a fragment in the text"""
-    book = get_book(db)
-    url = get_book_url(book)
-    text = get_text(get_html_text(url)) 
-    result = search_fragment_in_text(phrase, text)
-   
-    if result:
-        return result
-    else:
+ 
+    def search_fragment_in_text(self):
+        """Search need phrase in text.
+        If fragment was found return fragment.
+        Else return None"""
+        result = re.search("\n.*"+self.phrase+".*\n", self.text)
+        if result:
+            self.fragment = result[0].strip()
+            # If fragment close ":"(in russian language most often it means that text ends with a direct speech),
+            # that take next paragraph
+            if self.fragment[-1] == ":":
+                self.fragment = re.search("\n.*"+self.phrase+".*\n.*\n", text)
+                self.fragment = self.fragment[0].strip()
+                return self.fragment
+            else:
+                return self.fragment
+            
         return None
+
