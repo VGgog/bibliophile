@@ -1,5 +1,3 @@
-import multiprocessing
-
 from fastapi.responses import HTMLResponse
 from app import app, templates
 from fastapi import Request, Depends
@@ -20,20 +18,21 @@ async def home_page(request: Request):
 async def returning_the_found_passage(phrase_obj: validation.PhraseJSON):
     """Function for getting a phrase and return the found passage."""
     phrase = phrase_obj.phrase
-    print(phrase)
-    with multiprocessing.Pool(2) as pool:
-        result = pool.map(searching, (phrase, phrase, phrase))
-
-    return {"fragment_text": result[1]}
+    result = searching(phrase)
+    return {"fragment_text": result}
 
 
 def searching(phrase):
     """Searching fragment."""
-    db = session()
     fragment_text = None
+    step = 0
+    while not fragment_text and step < 25:
+        book = fragment.GetFragment(phrase)
+        fragment_text = book.result
+        step += 1
 
-    while not fragment_text:
-        fragment_text = fragment.return_result_of_searching(phrase, db)
-
-    return fragment_text
+    if fragment_text:
+        return fragment_text
+    else:
+        return "Отрывок не найден..."
 
