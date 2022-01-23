@@ -14,6 +14,7 @@ class GetFragment:
         self.db = session()
 
         self.phrase = phrase
+        self.book_id = random.randrange(1, db_crud.number_of_books(self.db)+1)
         self.book = self.get_book()
         self.text_link = self.get_text_link()
         self.text = self.get_text(self.get_html_text()) 
@@ -24,13 +25,12 @@ class GetFragment:
 
     def get_book(self):
         """Get random book in db"""
-        self.book_id = random.randrange(1, db_crud.number_of_books(self.db)+1)
         return db_crud.return_book(db=self.db, book_id=self.book_id)
    
     def get_text_link(self):
         """
         Return text_link.
-        exaple: book_url = https://ilibrary.ru/text/11/index.html
+        example: book_url = https://ilibrary.ru/text/11/index.html
         But text located at the link https://ilibrary.ru/text/11/p.{number of page}/index.html. 
         Due to this function converts book_url to the text_link when text located.
         Number of page = random number before max_page 
@@ -44,31 +44,31 @@ class GetFragment:
 
     def get_html_text(self):
         """Makes request on text_link, and return html_text"""
-        self.response = requests.get(self.text_link)
-        return self.response.text
+        response = requests.get(self.text_link)
+        return response.text
 
     def get_text(self, html_text):
         """Return text of the book"""
-        self.pars_obj = BeautifulSoup(html_text, 'lxml')
-        self.text = self.pars_obj.find('div', id='text')
+        pars_obj = BeautifulSoup(html_text, 'lxml')
+        self.text = pars_obj.find('div', id='text')
         return self.text.text
-
  
     def search_fragment_in_text(self):
-        """Search need phrase in text.
+        """
+        Search need phrase in text.
         If fragment was found return fragment.
-        Else return None"""
+        Else return None.
+        """
         result = re.search("\n.*"+self.phrase+".*\n", self.text)
         if result:
-            self.fragment = result[0].strip()
+            fragment = result[0].strip()
             # If fragment close ":"(in russian language most often it means that text ends with a direct speech),
             # that take next paragraph
-            if self.fragment[-1] == ":":
-                self.fragment = re.search("\n.*"+self.phrase+".*\n.*\n", text)
-                self.fragment = self.fragment[0].strip()
-                return self.fragment
+            if fragment[-1] == ":":
+                fragment = re.search("\n.*"+self.phrase+".*\n.*\n", self.text)
+                fragment = fragment[0].strip()
+                return fragment
             else:
-                return self.fragment
+                return fragment
             
         return None
-
