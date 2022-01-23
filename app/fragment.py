@@ -4,14 +4,14 @@ import random
 import requests
 from bs4 import BeautifulSoup
 
-from app.database import db_crud, session
+from app.database import db_crud
 
 
 class GetFragment:
 
-    def __init__(self, phrase):
+    def __init__(self, phrase, db):
 
-        self.db = session()
+        self.db = db
 
         self.phrase = phrase
         self.book_id = random.randrange(1, db_crud.number_of_books(self.db)+1)
