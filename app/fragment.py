@@ -16,12 +16,6 @@ class GetFragment:
         self.phrase = phrase
         self.book_id = random.randrange(1, db_crud.number_of_books(self.db)+1)
         self.book = self.get_book()
-        self.text_link = self.get_text_link()
-        self.text = self.get_text(self.get_html_text()) 
-        self.result = self.search_fragment_in_text()
-
-        self.author = self.book.author
-        self.book_title = self.book.book_title
 
     def get_book(self):
         """Get random book in db"""
@@ -42,30 +36,30 @@ class GetFragment:
         else:
             return self.book.url[:-11] + "/p.1" + self.book.url[-11:]
 
-    def get_html_text(self):
+    def get_html_text(self, text_link):
         """Makes request on text_link, and return html_text"""
-        response = requests.get(self.text_link)
+        response = requests.get(text_link)
         return response.text
 
     def get_text(self, html_text):
         """Return text of the book"""
         pars_obj = BeautifulSoup(html_text, 'lxml')
-        self.text = pars_obj.find('div', id='text')
-        return self.text.text
+        text = pars_obj.find('div', id='text')
+        return text.text
  
-    def search_fragment_in_text(self):
+    def search_fragment_in_text(self, text):
         """
         Search need phrase in text.
         If fragment was found return fragment.
         Else return None.
         """
-        result = re.search("\n.*"+self.phrase+".*\n", self.text)
+        result = re.search("\n.*"+self.phrase+".*\n", text)
         if result:
             fragment = result[0].strip()
             # If fragment close ":"(in russian language most often it means that text ends with a direct speech),
             # that take next paragraph
             if fragment[-1] == ":":
-                fragment = re.search("\n.*"+self.phrase+".*\n.*\n", self.text)
+                fragment = re.search("\n.*"+self.phrase+".*\n.*\n", text)
                 fragment = fragment[0].strip()
                 return fragment
             else:
