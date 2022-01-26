@@ -6,6 +6,7 @@ window.onload = function (){
     function handler() {
         document.getElementById('fragment-div').style.display = 'none';
         var data = document.getElementById('text-phrase').value;
+        var data = data.trim()
         if (data){
             let xhr = new XMLHttpRequest();
             url = 'http://127.0.0.1:8000/';
