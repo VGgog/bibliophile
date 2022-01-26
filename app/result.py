@@ -14,9 +14,11 @@ async def get_result(phrase):
                 result = await get_the_search_result(client, phrase, book)
                 
                 if result:
-                    return result
+                    return {"fragment": result,
+                            "author": book.author,
+                            "book_title": book.book_title}
 
-        return "Отрывок не найден..."
+        return None
 
 
 async def get_the_search_result(client, phrase, book):

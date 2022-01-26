@@ -17,4 +17,9 @@ async def returning_the_found_passage(phrase_obj: validation.PhraseJSON):
     """Function for getting a phrase and return the found passage."""
     phrase = phrase_obj.phrase
     fragment = await get_result(phrase)
-    return {"fragment_text": fragment}
+    if fragment:
+        return {"fragment_text": fragment["fragment"],
+                "author": fragment["author"],
+                "book_title": fragment["book_title"]}
+
+    return "Отрывок не найден..."
