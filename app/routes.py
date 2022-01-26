@@ -22,4 +22,4 @@ async def returning_the_found_passage(phrase_obj: validation.PhraseJSON):
                 "author": fragment["author"],
                 "book_title": fragment["book_title"]}
 
-    return "Отрывок не найден..."
+    return {"fragment_text": "Отрывок не найден..."}
