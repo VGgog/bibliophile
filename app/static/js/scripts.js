@@ -16,8 +16,11 @@ window.onload = function (){
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var json = JSON.parse(xhr.responseText);
                     document.getElementById('fragment-div').style.display = 'inline-block';
-                    document.getElementById('fragment-text').innerText = json.fragment_text
-                }
+                    document.getElementById('fragment-text').innerText = json.fragment_text;
+                    if (json.author){
+                        document.getElementById('author').innerText = json.author;
+                        document.getElementById('book-title').innerText = '"' + json.book_title + '"';}
+                };
             };
             var json_data = JSON.stringify({"phrase": data});
             xhr.send(json_data);

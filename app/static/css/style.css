@@ -48,5 +48,8 @@ a:link{
 .fragment-text p{
     margin:0;
     padding: 3px;
-    float: left;
+    text-align: left;
+}
+.book-info p{
+    text-align: right;
 }
