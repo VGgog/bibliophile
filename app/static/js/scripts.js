@@ -15,7 +15,7 @@ window.onload = function (){
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var json = JSON.parse(xhr.responseText);
-                    document.getElementById('fragment-div').style.display = 'block';
+                    document.getElementById('fragment-div').style.display = 'inline-block';
                     document.getElementById('fragment-text').innerText = json.fragment_text
                 }
             };
