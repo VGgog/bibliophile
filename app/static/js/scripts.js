@@ -19,7 +19,11 @@ window.onload = function (){
                     document.getElementById('fragment-text').innerText = json.fragment_text;
                     if (json.author){
                         document.getElementById('author').innerText = json.author;
-                        document.getElementById('book-title').innerText = '"' + json.book_title + '"';}
+                        document.getElementById('book-title').innerText = '"' + json.book_title + '"';
+                    } else {
+                        document.getElementById('author').innerText = '';
+                        document.getElementById('book-title').innerText = '';
+                    };
                 };
             };
             var json_data = JSON.stringify({"phrase": data});
