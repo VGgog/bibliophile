@@ -2,8 +2,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
+from config import Config
 
-engine = create_engine("postgresql+psycopg2://postgres:monoliza@localhost/bibliophile")
+engine = create_engine(Config.db_url)
 session = sessionmaker(engine)
 base = declarative_base()
 
@@ -15,4 +16,3 @@ def get_db():
         yield db
     finally:
         db.close()
-
