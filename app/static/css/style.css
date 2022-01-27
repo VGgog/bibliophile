@@ -41,6 +41,7 @@ a:link{
 .fragment-text{
     margin: 0 auto;
     margin-top: 50px;
+    min-height: 200px;
     height: auto;
     width: 500px;
     border: thin solid black
