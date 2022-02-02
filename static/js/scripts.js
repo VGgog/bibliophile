@@ -9,7 +9,7 @@ window.onload = function (){
         var data = data.trim()
         if (data){
             let xhr = new XMLHttpRequest();
-            url = 'http://127.0.0.1:8000/';
+            url = 'http://bibliophile.fun/';
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function () {
