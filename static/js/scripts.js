@@ -6,10 +6,11 @@ window.onload = function (){
     function handler() {
         document.getElementById('fragment-div').style.display = 'none';
         var data = document.getElementById('text-phrase').value;
-        var data = data.trim()
+        var data = data.trim();
+        var data = data.toLowerCase();
         if (data){
             let xhr = new XMLHttpRequest();
-            url = 'http://bibliophile.fun/';
+            url = 'https://bibliophile.fun/';
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function () {
