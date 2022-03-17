@@ -10,7 +10,7 @@ window.onload = function (){
         var data = data.toLowerCase();
         if (data){
             let xhr = new XMLHttpRequest();
-            url = 'https://bibliophile.fun/';
+            url = 'http://127.0.0.1:8000';
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.onreadystatechange = function () {
@@ -24,11 +24,11 @@ window.onload = function (){
                             document.getElementById('book-title').innerText = json.book_title;
                         } else {
                             document.getElementById('book-title').innerText = '"' + json.book_title + '"';
-                        }
-                    } else {
-                        document.getElementById('author').innerText = '';
-                        document.getElementById('book-title').innerText = '';
+                        };
                     };
+                } else if (xhr.readyState === 4 && xhr.status === 404) {
+                    document.getElementById('fragment-div').style.display = 'inline-block';
+                    document.getElementById('fragment-text').innerText = "Отрывок не найден...";
                 };
             };
             var json_data = JSON.stringify({"phrase": data});

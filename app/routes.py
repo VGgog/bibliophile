@@ -1,5 +1,5 @@
 from fastapi.responses import HTMLResponse
-from fastapi import Request
+from fastapi import Request, HTTPException
 
 from app import app, templates
 from app import validation
@@ -22,4 +22,4 @@ async def returning_the_found_passage(phrase_obj: validation.PhraseJSON):
                 "author": fragment["author"],
                 "book_title": fragment["book_title"]}
 
-    return {"fragment_text": "Отрывок не найден..."}
+    raise HTTPException(status_code=404, detail="Отрывок не найден...")
