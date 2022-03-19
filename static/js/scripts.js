@@ -29,6 +29,8 @@ window.onload = function (){
                 } else if (xhr.readyState === 4 && xhr.status === 404) {
                     document.getElementById('fragment-div').style.display = 'inline-block';
                     document.getElementById('fragment-text').innerText = "Отрывок не найден...";
+                    document.getElementById('book-title').innerText = '';
+                    document.getElementById('author').innerText = '';
                 };
             };
             var json_data = JSON.stringify({"phrase": data});
