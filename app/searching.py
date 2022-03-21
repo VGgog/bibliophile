@@ -30,8 +30,16 @@ def get_text_link(book):
 def get_text(html_text):
     """Return text of the book"""
     pars_obj = BeautifulSoup(html_text, 'lxml')
-    text = pars_obj.find('div', id='text')
-    return text.text
+
+    # In poems text located in <span class='pmm'></span>.
+    # But other literary genre text located in <span class='p'></span>.
+    # Because of this if text == None, then this book is not poem, and necessary search other literary genre text.
+    text = pars_obj.find('span', class_='pmm')
+    if text:
+        return text.text
+    else:
+        text = pars_obj.find_all('span', class_='p')
+        return '\n'.join([paragraph.text for paragraph in text])
 
 
 def search_fragment_in_text(phrase, text):
