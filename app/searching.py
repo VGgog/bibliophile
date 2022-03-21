@@ -33,27 +33,6 @@ def get_text(html_text):
     text = pars_obj.find('div', id='text')
     return text.text
 
-#
-# def search_fragment_in_text(phrase, text):
-#     """
-#     Search need phrase in text.
-#     If fragment was found return fragment.
-#     Else return None.
-#     """
-#     result = re.search("\n.*"+phrase+".*\n", text)
-#     if result:
-#         fragment = result[0].strip()
-#         # If fragment close ":"(in russian language most often it means that text ends with a direct speech),
-#         # that take next paragraph
-#         if fragment[-1] == ":":
-#             fragment = re.search("\n.*"+phrase+".*\n.*\n", text)
-#             fragment = fragment[0].strip()
-#             return fragment
-#         else:
-#             return fragment
-#
-#     return None
-
 
 def search_fragment_in_text(phrase, text):
     """
@@ -84,5 +63,3 @@ def search_fragment_in_text(phrase, text):
         return fragment
 
     return None
-
-
