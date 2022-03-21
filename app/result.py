@@ -1,22 +1,21 @@
 import aiohttp
-from app.database import session
+from sqlalchemy.orm import Session
+
 from app import searching
 
 
-async def get_result(phrase):
+async def get_result(phrase, db: Session):
     """Return result of searching fragment"""
     async with aiohttp.ClientSession() as client:
         # Bibliophile search a fragment in 100 book text.
         for i in range(100):
-            with session() as db:
+            book = searching.get_book(db)
+            result = await get_the_search_result(client, phrase, book)
 
-                book = searching.get_book(db)
-                result = await get_the_search_result(client, phrase, book)
-                
-                if result:
-                    return {"fragment": result,
-                            "author": book.author,
-                            "book_title": book.book_title}
+            if result:
+                return {"fragment": result,
+                        "author": book.author,
+                        "book_title": book.book_title}
 
         return None
 
