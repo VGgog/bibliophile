@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String
 
-from ..database import base
+from .database import base
 
 
 class Book(base):
