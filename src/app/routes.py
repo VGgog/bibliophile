@@ -3,7 +3,7 @@ from fastapi import Request, HTTPException, Depends
 from sqlalchemy.orm import Session
 
 from . import app, templates
-from . import validation
+from . import scheme
 from .result import get_result
 from .database import get_db
 
@@ -15,7 +15,7 @@ async def home_page(request: Request):
 
 
 @app.post("/")
-async def returning_the_found_passage(phrase_obj: validation.PhraseJSON, db: Session = Depends(get_db)):
+async def returning_the_found_passage(phrase_obj: scheme.PhraseJSON, db: Session = Depends(get_db)):
     """Function for getting a phrase and return the found passage."""
     phrase = phrase_obj.phrase
     fragment = await get_result(phrase, db)
