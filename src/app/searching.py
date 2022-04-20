@@ -3,12 +3,12 @@ import random
 
 from bs4 import BeautifulSoup
 
-from app.database import db_crud
+from .database import db_crud
 
 
 def get_book(db):
     """Get random book in db"""
-    return db_crud.return_book(db=db, book_id=random.randrange(1, db_crud.number_of_books(db)+1))
+    return db_crud.return_book(db=db, book_id=random.randrange(1, db_crud.number_of_books(db) + 1))
 
 
 def get_text_link(book):

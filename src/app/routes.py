@@ -2,10 +2,10 @@ from fastapi.responses import HTMLResponse
 from fastapi import Request, HTTPException, Depends
 from sqlalchemy.orm import Session
 
-from app import app, templates
-from app import validation
-from app.result import get_result
-from app.database import get_db
+from . import app, templates
+from . import validation
+from .result import get_result
+from .database import get_db
 
 
 @app.get("/", response_class=HTMLResponse)

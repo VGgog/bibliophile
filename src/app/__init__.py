@@ -3,8 +3,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pathlib import Path
 
-from app.admin import models
-from app.database import base, engine
+from .admin import models
+from .database import engine
 
 
 app = FastAPI()
@@ -13,5 +13,5 @@ templates = Jinja2Templates(directory="templates")
 
 models.base.metadata.create_all(bind=engine)
 
-from app import routes
-from app.admin import route
+from .admin import route
+from . import routes

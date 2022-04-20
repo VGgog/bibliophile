@@ -1,7 +1,7 @@
 import aiohttp
 from sqlalchemy.orm import Session
 
-from app import searching
+from . import searching
 
 
 async def get_result(phrase, db: Session):

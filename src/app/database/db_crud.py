@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 
-from app.admin import models
-from app.admin import schema
+from ..admin import models, schema
 
 
 def add_book_in_db(db: Session, data: schema.Book):
