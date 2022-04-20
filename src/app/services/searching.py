@@ -3,7 +3,7 @@ import random
 
 from bs4 import BeautifulSoup
 
-from .database import db_crud
+from ..database import db_crud
 
 
 def get_book(db):

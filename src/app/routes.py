@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from . import app, templates
 from . import scheme
-from .result import get_result
+from .services.result import get_result
 from .database import get_db
 
 
