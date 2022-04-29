@@ -16,3 +16,11 @@ def number_of_books(db: Session):
 def return_book(db: Session, book_id):
     """Return book obj from db"""
     return db.query(models.Book).filter(models.Book.id == book_id).first()
+
+
+def create_new_row_with_book(db: Session, book):
+    """"""
+    db.add(models.Book(author=book.author,
+                       book_title=book.title,
+                       text=book.text))
+    return db.commit()
