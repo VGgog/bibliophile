@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
 from ..scheme import AddBookValidation
-from src.app.database import db_crud
+from app.database import db_crud
 
 
 class AdminService:
@@ -19,4 +19,5 @@ class AdminService:
         if db_crud.check_book_in_db(db=db, book_title=book_data.title):
             return False
 
+        db_crud.create_new_row_with_book(db=db, book=book_data)
         return True

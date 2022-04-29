@@ -4,7 +4,7 @@ from starlette import status
 
 from .scheme import AddBookValidation, BookScheme
 from .services.admin_service import AdminService
-from ..app.database import get_db
+from app.database import get_db
 from config import Config
 
 admin_route = APIRouter(tags=['admin'])
