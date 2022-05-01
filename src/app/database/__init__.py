@@ -2,7 +2,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-from config import Config
+try:
+    from src.config import Config
+except ModuleNotFoundError:
+    from config import Config
 
 engine = create_engine(Config.db_url)
 session = sessionmaker(engine)
