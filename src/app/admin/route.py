@@ -4,11 +4,20 @@ from sqlalchemy.orm import Session
 from .. import app
 from ..database import db_crud, get_db
 from . import schema
-from config import Config
+
+try:
+    # alembic migration need such import
+    from src.config import Config
+except ModuleNotFoundError:
+    # uvicorn need such import
+    from config import Config
 
 
 @app.post("/admin/add")
-async def add_book_data_in_db(data: schema.Book, db: Session = Depends(get_db)):
+async def add_book_data_in_db(
+        data: schema.Book,
+        db: Session = Depends(get_db)
+):
     """Function add book data(text-url, author, book_title etc.) in db."""
     if not data.token == Config.admin_token:
         raise HTTPException(status_code=403, detail="You don't have rights")

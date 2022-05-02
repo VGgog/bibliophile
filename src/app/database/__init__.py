@@ -3,9 +3,12 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 try:
+    # alembic need such import
     from src.config import Config
 except ModuleNotFoundError:
+    # uvicorn need such import
     from config import Config
+
 
 engine = create_engine(Config.db_url)
 session = sessionmaker(engine)
